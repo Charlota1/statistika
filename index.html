@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistická analýza velikostí bot</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        img:hover {
+            transform: scale(1.02);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            margin: 20px auto;
+            display: block;
+            box-shadow: none;
+            cursor: zoom-out;
+        }
+        .section {
+            margin: 30px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .download-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        .download-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .download-button:hover {
+            background-color: #1a2634;
+        }
+        .download-button svg {
+            margin-right: 8px;
+        }
+        .assignment {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .original-data {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .methodology {
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        .methodology h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        .methodology p {
+            margin-bottom: 15px;
+        }
+        .formula {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .graph-explanation {
+            background-color: #fff8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Statistická analýza velikostí bot</h1>
+
+        <div class="assignment">
+            <h2>Zadání</h2>
+            <p>Proveďte statistickou analýzu datového souboru dle následujících bodů:</p>
+            <ol>
+                <li>Definujte statistický soubor (min. 60 hodnot) a statistický znak.</li>
+                <li>Sestavte tabulku rozdělení četností (absolutní, relativní).</li>
+                <li>Graficky znázorněte rozdělení četností (sloupcový a koláčový diagram).</li>
+                <li>Určete charakteristiky polohy (aritmetický průměr, modus, medián).</li>
+                <li>Určete charakteristiky variability (rozptyl, směrodatná odchylka, variační koeficient).</li>
+                <li>Formulujte závěry.</li>
+            </ol>
+            <p>Termín odevzdání: 7.1.2025</p>
+        </div>
+
+        <div class="original-data">
+            <h2>Původní data</h2>
+            <p>Statistický soubor obsahuje 64 hodnot velikostí bot. Data byla sesbírána měřením velikostí bot studentů.</p>
+            <table>
+                <tr>
+                    <th>Velikost boty</th>
+                    <th>Počet studentů</th>
+                </tr>
+                <tr><td>35</td><td>5</td></tr>
+                <tr><td>36</td><td>3</td></tr>
+                <tr><td>37</td><td>5</td></tr>
+                <tr><td>38</td><td>8</td></tr>
+                <tr><td>39</td><td>12</td></tr>
+                <tr><td>40</td><td>10</td></tr>
+                <tr><td>41</td><td>9</td></tr>
+                <tr><td>42</td><td>7</td></tr>
+                <tr><td>43</td><td>3</td></tr>
+                <tr><td>44</td><td>2</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>1. Základní charakteristiky</h2>
+            <table>
+                <tr><th>Charakteristika</th><th>Hodnota</th></tr>
+                <tr><td>Aritmetický průměr</td><td>39.375</td></tr>
+                <tr><td>Modus</td><td>39</td></tr>
+                <tr><td>Medián</td><td>39</td></tr>
+                <tr><td>Rozptyl</td><td>5.203</td></tr>
+                <tr><td>Směrodatná odchylka</td><td>2.281</td></tr>
+                <tr><td>Variační koeficient</td><td>5.79%</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>2. Grafy</h2>
+            <img src="statisticke_grafy.png" alt="Statistické grafy" onclick="showModal(this)">
+        </div>
+
+        <div class="section">
+            <h2>3. Tabulka četností</h2>
+            <table>
+                <tr>
+                    <th>Velikost boty</th>
+                    <th>Absolutní četnost</th>
+                    <th>Relativní četnost</th>
+                    <th>Relativní četnost (%)</th>
+                </tr>
+                <tr><td>35</td><td>5</td><td>0.078</td><td>7.8%</td></tr>
+                <tr><td>36</td><td>3</td><td>0.047</td><td>4.7%</td></tr>
+                <tr><td>37</td><td>5</td><td>0.078</td><td>7.8%</td></tr>
+                <tr><td>38</td><td>8</td><td>0.125</td><td>12.5%</td></tr>
+                <tr><td>39</td><td>12</td><td>0.188</td><td>18.8%</td></tr>
+                <tr><td>40</td><td>10</td><td>0.156</td><td>15.6%</td></tr>
+                <tr><td>41</td><td>9</td><td>0.141</td><td>14.1%</td></tr>
+                <tr><td>42</td><td>7</td><td>0.109</td><td>10.9%</td></tr>
+                <tr><td>43</td><td>3</td><td>0.047</td><td>4.7%</td></tr>
+                <tr><td>44</td><td>2</td><td>0.031</td><td>3.1%</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>4. Závěry</h2>
+            <ul>
+                <li>Nejčastější velikost bot je 39</li>
+                <li>Průměrná velikost bot je 39.375</li>
+                <li>50% hodnot leží pod velikostí 39</li>
+                <li>Rozptyl velikostí je 5.203, což indikuje variabilitu dat</li>
+                <li>Směrodatná odchylka 2.281 ukazuje průměrnou odchylku od průměru</li>
+                <li>Variační koeficient 5.79% značí relativní variabilitu souboru</li>
+            </ul>
+        </div>
+
+        <div class="methodology">
+            <h2>Postup řešení</h2>
+            
+            <h3>1. Sběr a příprava dat</h3>
+            <p>Nejprve jsem shromáždila data o velikostech bot od 64 studentů. Tato data jsem uspořádala do přehledné tabulky, kde jsem zaznamenala jednotlivé velikosti bot (od 35 do 44) a počet studentů s danou velikostí.</p>
+
+            <h3>2. Výpočet četností</h3>
+            <p>Pro každou velikost boty jsem vypočítala:</p>
+            <ul>
+                <li><strong>Absolutní četnost</strong> - počet výskytů dané velikosti</li>
+                <li><strong>Relativní četnost</strong> - podíl absolutní četnosti k celkovému počtu hodnot (64)</li>
+                <li><strong>Procentuální četnost</strong> - relativní četnost vyjádřená v procentech</li>
+            </ul>
+            <p>Například pro velikost 39:</p>
+            <div class="formula">
+                Relativní četnost = 12/64 = 0.188
+                Procentuální četnost = 0.188 × 100 = 18.8%
+            </div>
+
+            <h3>3. Výpočet charakteristik polohy</h3>
+            <p><strong>Aritmetický průměr</strong> jsem vypočítala jako vážený průměr, kde váhou je četnost dané velikosti:</p>
+            <div class="formula">
+                Průměr = (35×5 + 36×3 + 37×5 + ... + 44×2) / 64 = 39.375
+            </div>
+            
+            <p><strong>Modus</strong> (nejčastější hodnota) je velikost 39, protože má nejvyšší četnost (12 studentů).</p>
+            
+            <p><strong>Medián</strong> je také 39, protože při seřazení všech 64 hodnot je to prostřední hodnota (32. a 33. hodnota).</p>
+
+            <h3>4. Výpočet charakteristik variability</h3>
+            <p><strong>Rozptyl</strong> měří variabilitu dat kolem průměru. Vypočítala jsem ho jako průměr druhých mocnin odchylek od průměru:</p>
+            <div class="formula">
+                Rozptyl = Σ((x - průměr)² × četnost) / n = 5.203
+            </div>
+            
+            <p><strong>Směrodatná odchylka</strong> je odmocnina z rozptylu:</p>
+            <div class="formula">
+                Směrodatná odchylka = √5.203 = 2.281
+            </div>
+            
+            <p><strong>Variační koeficient</strong> vyjadřuje relativní variabilitu vzhledem k průměru:</p>
+            <div class="formula">
+                Variační koeficient = (2.281 / 39.375) × 100 = 5.79%
+            </div>
+        </div>
+
+        <div class="graph-explanation">
+            <h2>Vysvětlení grafů</h2>
+            
+            <h3>Sloupcový diagram (vlevo nahoře)</h3>
+            <p>Tento graf zobrazuje absolutní četnosti jednotlivých velikostí bot. Na vodorovné ose jsou velikosti bot (35-44) a na svislé ose počet studentů s danou velikostí. Výška sloupce přímo odpovídá počtu studentů. Z grafu je jasně vidět, že nejvíce studentů má velikost 39 (12 studentů).</p>
+            
+            <h3>Koláčový diagram (vpravo nahoře)</h3>
+            <p>Zobrazuje procentuální zastoupení jednotlivých velikostí bot. Každý výseč představuje jednu velikost boty a její velikost odpovídá procentu studentů s touto velikostí. Například velikost 39 zabírá 18.8% celého koláče.</p>
+            
+            <h3>Krabicový diagram (vlevo dole)</h3>
+            <p>Tento graf poskytuje informace o rozložení dat:</p>
+            <ul>
+                <li>Střední čára představuje medián (39)</li>
+                <li>Horní a dolní okraj "krabice" představují horní a dolní kvartil</li>
+                <li>"Vousy" ukazují minimální (35) a maximální (44) hodnoty</li>
+                <li>Výška krabice ukazuje, kde leží 50% všech hodnot</li>
+            </ul>
+            
+            <h3>Histogram (vpravo dole)</h3>
+            <p>Podobně jako sloupcový diagram zobrazuje četnosti, ale data jsou uspořádána do spojitého grafu, který ukazuje rozložení velikostí bot. Tvar histogramu naznačuje, že data přibližně odpovídají normálnímu rozdělení s vrcholem kolem velikosti 39-40.</p>
+        </div>
+
+        <div class="download-section">
+            <h2>Ke stažení</h2>
+            <div class="download-buttons">
+                <a href="statisticke_grafy.png" class="download-button">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/>
+                        <path d="M14 13v1H2v-1h12z"/>
+                    </svg>
+                    Grafy (PNG)
+                </a>
+                <a href="statisticka_analyza.pdf" class="download-button">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/>
+                        <path d="M14 13v1H2v-1h12z"/>
+                    </svg>
+                    Report (PDF)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="imageModal" onclick="hideModal()">
+        <img id="modalImage" src="" alt="Zvětšený graf">
+    </div>
+
+    <script>
+        function showModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImg.src = img.src;
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
+
+        // Zavřít modal při stisku klávesy Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html> 
